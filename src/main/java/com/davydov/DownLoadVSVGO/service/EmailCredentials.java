@@ -1,9 +1,9 @@
-package com.davydov.DownLoadVSVGO;
+package com.davydov.DownLoadVSVGO.service;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailConfig {
+public class EmailCredentials {
 
   private String password, login, email;
 

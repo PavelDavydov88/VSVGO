@@ -1,4 +1,4 @@
-package com.davydov.DownLoadVSVGO;
+package com.davydov.DownLoadVSVGO.service;
 
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,9 @@
-package com.davydov.DownLoadVSVGO;
+package com.davydov.DownLoadVSVGO.controller;
 
+import com.davydov.DownLoadVSVGO.service.EmailCredentials;
+import com.davydov.DownLoadVSVGO.service.ListEmailImpl;
+import com.davydov.DownLoadVSVGO.service.ListRGE;
+import com.davydov.DownLoadVSVGO.service.StartLoad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
@@ -14,43 +18,47 @@ import java.util.Map;
 @Controller
 public class ControllerVSVGO {
 
-  @Autowired
-  JavaMailSenderImpl javaMailSender;
+  private final JavaMailSenderImpl javaMailSender;
+
+  private final StartLoad startLoad;
+
+  private final ListRGE listRGE;
+
+  private final ListEmailImpl listEmailImpl;
+
+  private final EmailCredentials emailCredentials;
 
   @Autowired
-  StartLoad startLoad;
-
-  @Autowired
-  ListRGE listRGE;
-
-  @Autowired
-  ListEmail listEmail;
-
-  @Autowired
-  EmailConfig emailConfig;
+  public ControllerVSVGO(JavaMailSenderImpl javaMailSender, StartLoad startLoad, ListRGE listRGE, ListEmailImpl listEmailImpl, EmailCredentials emailCredentials) {
+    this.javaMailSender = javaMailSender;
+    this.startLoad = startLoad;
+    this.listRGE = listRGE;
+    this.listEmailImpl = listEmailImpl;
+    this.emailCredentials = emailCredentials;
+  }
 
   @GetMapping("/start")
-  public String getStart(Model model) throws Exception {
-    System.out.println("email= " + emailConfig.getLogin());
-    model.addAttribute(emailConfig);
+  public String getStart(Model model)  {
+    System.out.println("email= " + emailCredentials.getLogin());
+    model.addAttribute(emailCredentials);
     startLoad.setStart(true);
     return "start";
   }
 
   @PostMapping("/start")
-  public String saveStart(EmailConfig emailConfig, Model model) {
-    this.emailConfig.setLogin(emailConfig.getLogin());
-    this.emailConfig.setPassword(emailConfig.getPassword());
-    this.emailConfig.setEmail(emailConfig.getEmail());
-    javaMailSender.setUsername(this.emailConfig.getEmail());
-    javaMailSender.setPassword(this.emailConfig.getPassword());
-    model.addAttribute(this.emailConfig);
+  public String saveStart(EmailCredentials emailCredentials, Model model) {
+    this.emailCredentials.setLogin(emailCredentials.getLogin());
+    this.emailCredentials.setPassword(emailCredentials.getPassword());
+    this.emailCredentials.setEmail(emailCredentials.getEmail());
+    javaMailSender.setUsername(this.emailCredentials.getEmail());
+    javaMailSender.setPassword(this.emailCredentials.getPassword());
+    model.addAttribute(this.emailCredentials);
     return "addEmail";
   }
 
   @GetMapping("/addEmail")
   public String getAddEmail() {
-    for (String st : listEmail.getList()) {
+    for (String st : listEmailImpl.getList()) {
       System.out.println("email for dispatching =" + st);
     }
     return "addEmail";
@@ -58,8 +66,8 @@ public class ControllerVSVGO {
 
   @PostMapping("/addEmail")
   public String saveEmail(@ModelAttribute("mail") String emailadd) {
-    this.listEmail.addEmail(emailadd);
-    for (String st : listEmail.getList()) {
+    this.listEmailImpl.addEmail(emailadd);
+    for (String st : listEmailImpl.getList()) {
       System.out.println("email for dispatching =" + st);
     }
     return "addEmail";
@@ -84,11 +92,9 @@ public class ControllerVSVGO {
 
   @GetMapping("/startLoad")
   public String startLoad() {
-    try {
+
       startLoad.doStart();
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+
     return "startLoad";
   }
 

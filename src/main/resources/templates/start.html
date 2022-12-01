@@ -12,15 +12,15 @@
     <h3>Login/Password Info:</h3>
     <div>
         <label for="login">Login:</label>
-        <input id="login" type="text" name="login" placeholder="Login" th:value="${emailConfig.login}" value="login"/>
+        <input id="login" type="text" name="login" placeholder="Login" th:value="${emailCredentials.login}" value="login"/>
     </div>
     <div>
         <label for="password">Password:</label>
-        <input id="password" type="password" name="password" placeholder="Password" th:value="${emailConfig.password}" value="password"/>
+        <input id="password" type="password" name="password" placeholder="Password" th:value="${emailCredentials.password}" value="password"/>
     </div>
     <div>
         <label for="email">Email:</label>
-        <input id="email" type="text" name="email" placeholder="Email" th:value="${emailConfig.email}" value="email"/>
+        <input id="email" type="text" name="email" placeholder="Email" th:value="${emailCredentials.email}" value="email"/>
     </div>
     <div>
         <button type="submit">Start</button>

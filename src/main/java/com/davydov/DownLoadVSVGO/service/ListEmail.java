@@ -1,8 +1,8 @@
-package com.davydov.DownLoadVSVGO;
+package com.davydov.DownLoadVSVGO.service;
 
 import java.util.List;
 
-public interface IListEmail {
+public interface ListEmail {
   List<String> getList();
   void addEmail(String email);
 }

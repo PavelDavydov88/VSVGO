@@ -1,4 +1,4 @@
-package com.davydov.DownLoadVSVGO;
+package com.davydov.DownLoadVSVGO.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

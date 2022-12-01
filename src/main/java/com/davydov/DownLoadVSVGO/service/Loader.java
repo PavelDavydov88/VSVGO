@@ -1,4 +1,4 @@
-package com.davydov.DownLoadVSVGO;
+package com.davydov.DownLoadVSVGO.service;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
